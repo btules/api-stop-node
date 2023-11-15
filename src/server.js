@@ -4,6 +4,8 @@ const bodyParser = require('body-parser');
 const cors = require('cors')
 const server = express()
 
+require('./db');
+
 server.use(cors())
 server.use(bodyParser.json())
 server.use('/', routes)

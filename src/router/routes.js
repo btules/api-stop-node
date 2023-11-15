@@ -5,7 +5,7 @@ const StopGameController = require('../controller/game/stopGameController')
 const ExistingRoomController = require('../controller/roomConfiguration/existingRoomController')
 const NewRoomController = require('../controller/roomConfiguration/newRoomController')
 
-const Room = require('../model/Room.js');
+const Room = require('../model/Room.js'); //Coloquei aqui pra teste por enqunto
 
 router.post('/roomConfiguration/existingRoom', (req, res) => {
     const room = req.body;
@@ -13,10 +13,14 @@ router.post('/roomConfiguration/existingRoom', (req, res) => {
     res.send(existingRoom);
 });
 
-router.post('/roomConfiguration/newRoom', (req, res) =>{
+router.post('/roomConfiguration/newRoom', async (req, res) =>{
     const newRoom = req.body;
-    const createRoom = NewRoomController.newRoom(newRoom);
-    res.send(createRoom);
+    
+    const room = await Room.create(req.body);
+
+    res.json({room});
+    /*const createRoom = NewRoomController.newRoom(newRoom);
+    res.send(createRoom);*/
 });
 
 router.post('/game/startGame', (req, res) => {

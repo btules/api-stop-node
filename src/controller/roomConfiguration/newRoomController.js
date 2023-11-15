@@ -1,5 +1,7 @@
+const Room = require('../../model/Room.js');
+
 class NewRoomController {
-    static newRoom(newRoom){
+    async newRoom(newRoom){
         console.log(newRoom)
     }
 }
