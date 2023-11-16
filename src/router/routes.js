@@ -7,20 +7,25 @@ const NewRoomController = require('../controller/roomConfiguration/newRoomContro
 
 const Room = require('../model/Room.js'); //Coloquei aqui pra teste por enqunto
 
-router.post('/roomConfiguration/existingRoom', (req, res) => {
-    const room = req.body;
-    const existingRoom = ExistingRoomController.existingRoom(room);
-    res.send(existingRoom);
+
+router.get('/roomConfiguration/existingRoom/:codeRoom', async (req, res) => {
+    try{
+        const newRoom = await ExistingRoomController.getExistingRoom(req, res);
+        res.send(newRoom);
+    }
+    catch (error){
+        res.send(null);
+    }
 });
 
 router.post('/roomConfiguration/newRoom', async (req, res) =>{
-    const newRoom = req.body;
-    
-    const room = await Room.create(req.body);
-
-    res.json({room});
-    /*const createRoom = NewRoomController.newRoom(newRoom);
-    res.send(createRoom);*/
+    try{
+        const newRoom = await NewRoomController.createRoom(req, res);
+        res.end(newRoom);
+    }
+    catch (error){
+        res.end();
+    }
 });
 
 router.post('/game/startGame', (req, res) => {
@@ -37,6 +42,11 @@ router.post('/game/stopGame', (req, res) =>{
     const finalGame = StopGameController.stopGame(stopGame);
 
     res.send(finalGame);
+});
+
+router.get('/roomConfiguration/existingRoom/getByCode/:code', (req, res) => {
+    const room = ExistingRoomController.getExistingRoom(req.params.code);
+    res.status(200).json({ room });
 });
 
 module.exports = router;
