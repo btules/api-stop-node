@@ -21,4 +21,7 @@ dbConnect.authenticate().then(function(){
 Room.init(dbConnect);
 Room.sync();
 
+User.init(dbConnect);
+User.sync();
+
 module.exports = dbConnect;
