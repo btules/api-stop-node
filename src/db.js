@@ -18,19 +18,7 @@ dbConnect.authenticate().then(function(){
     console.log("Erro conexão com banco de dados");
 });
 
-AnswerCategory.init(dbConnect);
-AnswerCategory.sync();
-
 Room.init(dbConnect);
 Room.sync();
-
-RoundGame.init(dbConnect);
-RoundGame.sync();
-
-User.init(dbConnect);
-User.sync();
-
-UserRoundGame.init(dbConnect);
-UserRoundGame.sync();
 
 module.exports = dbConnect;
