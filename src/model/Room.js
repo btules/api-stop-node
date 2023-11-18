@@ -6,7 +6,8 @@ class Room extends Model {
       Id: { type: Sequelize.INTEGER, autoIncrement: true, allowNull: false, primaryKey: true },
       CodeRoom: { type: DataTypes.STRING, allowNull: false },
       NumberPlayers: { type: DataTypes.INTEGER, allowNull: false  },
-      PlayerNameCreator: { type: DataTypes.STRING, allowNull: false }
+      PlayerNameCreator: { type: DataTypes.STRING, allowNull: false },
+      NumberOfRounds: { type: DataTypes.INTEGER, allowNull: false }
     },{
       sequelize,
       modelName: 'Room',
