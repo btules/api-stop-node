@@ -5,6 +5,8 @@ class RoundGame extends Model {
     super.init({
       Id: { type: Sequelize.INTEGER, autoIncrement: true, allowNull: false, primaryKey: true },
       IdRoom: { type: DataTypes.INTEGER, allowNull: false },
+      NumberRound: { type: DataTypes.INTEGER, allowNull: false },
+      NumberOfRounds: { type: DataTypes.INTEGER, allowNull: false },
       Letter: { type: DataTypes.CHAR, allowNull: false },
       Finished: { type: DataTypes.BOOLEAN, allowNull: false, defaultValue: false },
       DateTimeInit: { type: DataTypes.DATE, allowNull: false},

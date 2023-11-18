@@ -7,7 +7,7 @@ class UserRoundGame extends Model {
       Id: { type: Sequelize.INTEGER, autoIncrement: true, allowNull: false, primaryKey: true },
       IdRoundGame: { type: DataTypes.INTEGER, allowNull: false },
       IdUser: { type: DataTypes.INTEGER, allowNull: false  },
-      Answers: { type: DataTypes.ARRAY(AnswerCategory), allowNull: true},
+      IdAnswer: { type: DataTypes.INTEGER, allowNull: false  },
       DateTimeStop: { type: DataTypes.DATE, allowNull: true },
       Score: { type: DataTypes.INTEGER, allowNull: true }
     },{
