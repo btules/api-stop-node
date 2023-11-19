@@ -17,6 +17,11 @@ class RoundGame extends Model {
       tableName: 'RoundGame',
     })
   }
+
+  static async CreateRoundGame(room, users){
+    //Busca os jogadores da sala
+    var users = await User.findAll({ where: { CodeRoom: codeRoom } });
+  }
 }
 
 module.exports = RoundGame;

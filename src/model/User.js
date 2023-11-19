@@ -12,14 +12,6 @@ class User extends Model {
       tableName: 'User',
     })
   }
-
-  static async checkMaxLimitPlayers(codeRoom, room){
-    var users = await User.findAll({ where: { CodeRoom: codeRoom } });
-    if(users.length >= room.NumberPlayers)
-      return true;
-    else
-      return false;
-  }
 }
 
 module.exports = User;
