@@ -11,16 +11,16 @@ class NewRoomController {
             const {CodeRoom, NumberPlayers, PlayerNameCreator, NumberRounds} = req.body;
             const dbRoom = await Room.findOne({ where: { CodeRoom } });
 
-            const dbUser = await User.findOne({ where: { Name: PlayerNameCreator } });
+            var dbUser = await User.findOne({ where: { Name: PlayerNameCreator } });
             if(!dbUser)
-                await User.create({ Name : PlayerNameCreator });
+                dbUser = await User.create({ Name : PlayerNameCreator });
             
             if(dbRoom){
                 res.status(200).json({ message: "Já existe esta sala" });
             }
             else{
-                const room = await Room.create(req.body);
-                res.status(200).json({ room });
+                var room = await Room.create(req.body);
+                res.status(200).json({ room , user: dbUser });
             }
         }
         catch (error){

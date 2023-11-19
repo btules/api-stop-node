@@ -1,5 +1,5 @@
 const Room = require('../../model/Room.js');
-
+const User = require('../../model/User.js');
 class ExistingRoomController {
     static async getExistingRoom (req, res) {
         try{
@@ -18,6 +18,30 @@ class ExistingRoomController {
         }
         catch (error){
             res.status(500).json({ error: "Erro interno do servidor" });
+        }
+    }
+
+    static async setUserExistingRoom (req, res) {
+        try{
+            console.log(req.body);
+            const { CodeRoom, Name } = req.body;
+
+            const dbRoom = await Room.findOne({ where: { CodeRoom } });
+
+            if(dbRoom){
+                var dbUser = await User.findOne({ where: { Name } });
+                if(!dbUser)
+                    dbUser = await User.create({ Name });
+
+                res.status(200).json({ room: dbRoom, user: dbUser });
+            }
+            else{
+                res.status(401).json({ error: "Sala não encontrada" });
+            }
+        }
+        catch (error){
+            console.log("Erro: ", error);
+            res.status(500).json({ error: "Erro interno do servidor tttt" });
         }
     }
 }

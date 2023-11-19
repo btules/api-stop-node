@@ -4,8 +4,8 @@ class UserRoom extends Model {
   static init(sequelize){
     super.init({
       Id: { type: Sequelize.INTEGER, autoIncrement: true, allowNull: false, primaryKey: true },
-      IdUser: { type: DataTypes.INTEGER, allowNull: false },
-      IdRoom: { type: DataTypes.INTEGER, allowNull: false  }
+      Name: { type: DataTypes.STRING, allowNull: false },
+      CodeRoom: { type: DataTypes.STRING, allowNull: false  }
     },{
       sequelize,
       modelName: 'UserRoom',

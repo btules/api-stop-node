@@ -5,28 +5,25 @@ const StopGameController = require('../controller/game/stopGameController')
 const ExistingRoomController = require('../controller/roomConfiguration/existingRoomController')
 const NewRoomController = require('../controller/roomConfiguration/newRoomController')
 
-const Room = require('../model/Room.js'); //Coloquei aqui pra teste por enqunto
-
-
-router.get('/roomConfiguration/existingRoom/:codeRoom', async (req, res) => {
+//#region Room
+router.post('/roomConfiguration/existingRoom', async (req, res) => {
     try{
-        const newRoom = await ExistingRoomController.getExistingRoom(req, res);
-        res.send(newRoom);
-    }
-    catch (error){
-        res.send(null);
-    }
-});
-
-router.post('/roomConfiguration/newRoom', async (req, res) =>{
-    try{
-        const newRoom = await NewRoomController.createRoom(req, res);
-        res.end(newRoom);
+        await ExistingRoomController.setUserExistingRoom(req, res);
     }
     catch (error){
         res.end();
     }
 });
+
+router.post('/roomConfiguration/newRoom', async (req, res) =>{
+    try{
+        await NewRoomController.createRoom(req, res);
+    }
+    catch (error){
+        res.end();
+    }
+});
+//#endregion Room
 
 router.post('/game/startGame', (req, res) => {
     const startGame = req.body;
