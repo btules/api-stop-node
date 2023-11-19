@@ -23,5 +23,7 @@ Room.sync();
 
 User.init(dbConnect);
 User.sync();
+User.sync({alter: true});
+
 
 module.exports = dbConnect;

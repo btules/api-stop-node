@@ -1,5 +1,4 @@
 const { Model, Sequelize, DataTypes } = require('sequelize');
-
 class Room extends Model {
   static init(sequelize){
     super.init({

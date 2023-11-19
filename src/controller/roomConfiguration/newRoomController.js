@@ -13,7 +13,7 @@ class NewRoomController {
 
             var dbUser = await User.findOne({ where: { Name: PlayerNameCreator } });
             if(!dbUser)
-                dbUser = await User.create({ Name : PlayerNameCreator });
+                dbUser = await User.create({ Name : PlayerNameCreator, CodeRoom });
             
             if(dbRoom){
                 res.status(200).json({ message: "Já existe esta sala" });
