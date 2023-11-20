@@ -6,6 +6,7 @@ class User extends Model {
       Id: { type: Sequelize.INTEGER, autoIncrement: true, allowNull: false, primaryKey: true },
       Name: { type: DataTypes.STRING, allowNull: false },
       CodeRoom: { type: DataTypes.STRING, allowNull: false },
+      IdConnection: { type: DataTypes.STRING, allowNull: true },
     },{
       sequelize,
       modelName: 'User',

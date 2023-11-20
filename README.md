@@ -8,3 +8,5 @@ Documentação do Sequelize: https://sequelize.org/docs/v6/
 
 # Instala o drive do banco mysql
 **npm install --save mysql2**
+
+npm install express socket.io
