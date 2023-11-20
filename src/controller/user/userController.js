@@ -2,9 +2,6 @@ const User = require('../../model/User');
 
 class ConnectionRoomController{
     static async createOrUpdateConnection (userRoom, idConnection) {
-        console.log("Chegou na controller de usuário");
-        console.log("Id: ", idConnection);
-
         try{
             const { CodeRoom, Name } = userRoom;
             
@@ -17,6 +14,18 @@ class ConnectionRoomController{
                 await User.update( { IdConnection: idConnection }, {  where: { Name, CodeRoom } });
             }
             console.log("Depois que salvou: ", dbUser);
+        }
+        catch (error){
+            console.log("Erro:", error);
+        }
+    }
+
+    static async getUsersByRoom (codeRoom) {
+        console.log("Chegou: ", codeRoom);
+        try{
+            var listUsers = await User.findAll({ where: { CodeRoom: codeRoom } });
+            console.log("Lista de usuários:", listUsers);
+            return listUsers;
         }
         catch (error){
             console.log("Erro:", error);

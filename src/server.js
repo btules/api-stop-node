@@ -16,6 +16,7 @@ server.use('/', routes)
 const serverHttp = http.createServer(server);
 const serverSocketIo = require('socket.io')(serverHttp);
 
+//Define onde vai ouvir
 serverHttp.listen(3000, () =>{
     console.log('server ok')
 });
@@ -29,21 +30,27 @@ serverSocketIo.on('connection', socket => {
     
     //Manda o client mandar o user pra salvar no banco
     socket.send('connectUser');
-    
+    serverSocketIo.emit('message', "Teste para todos");
+
     socket.on('connectionUser', (user) => {
         //Salva o user no banco com o id da conexão
         UserController.createOrUpdateConnection(user, socket.id);
     });
 
-    socket.on('message', (message) => {
+    socket.on('message', async (messageWebSocket) => {
         //Print mensagem que veio do client
-        console.log(`Mensagem recebida: ${message}`);
+        const { CodeRoom, Message } = messageWebSocket;
+        
+        serverSocketIo.emit('message', messageWebSocket);
+
         // Envie de volta a mensagem recebida para o cliente
-        socket.send(`Você disse: ${message}`);
+        socket.send(Message);
     });
 
     socket.on('disconnect', () => {
         console.log('desconectado: ' + socket.id);
     });
 });
+
+module.exports = { serverHttp, serverSocketIo };
 //#endregion WEBSOCKET

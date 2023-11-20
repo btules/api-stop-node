@@ -27,9 +27,18 @@ router.post('/roomConfiguration/newRoom', async (req, res) =>{
 
 router.post('/game/startGame', (req, res) => {
     const startGame = req.body;
-
     const playGame = StartGameController.startGame(startGame);
 
+    res.send(playGame);
+});
+
+router.get('/game/getRoundGame/:IdRoom', (req, res) => {
+    StartGameController.getRoundGame(req, res);
+});
+
+//Rota teste
+router.post('/game/startGame/createOrUpdateRound', (req, res) => {
+    const playGame = StartGameController.createOrUpdateRound('75700447462');
     res.send(playGame);
 });
 

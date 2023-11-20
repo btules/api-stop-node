@@ -1,5 +1,7 @@
 const Room = require('../../model/Room.js');
 const User = require('../../model/User.js');
+const StartGameController = require('../../controller/game/startGameController.js');
+
 class ExistingRoomController {
     static async getExistingRoom (req, res) {
         try{
@@ -30,7 +32,7 @@ class ExistingRoomController {
             if(dbRoom){
                 //Confere a quantidade de pessoas na sala
                 var users = await User.findAll({ where: { CodeRoom} });
-                if(users.length >= dbRoom.NumberPlayers){
+                if(users.length >= dbRoom.NumberPlayers && !users.some(user => user.Name === Name)){
                     res.status(401).json({ error: "Limite de jogadores atingido" });
                 }
                 else{
@@ -38,13 +40,15 @@ class ExistingRoomController {
                     if(!dbUser)
                         dbUser = await User.create({ Name, CodeRoom });
 
+                    var startGame = false;
                     //Se for o último player da sala, avisa que vai começar
                     if((users.length + 1) >= dbRoom.NumberPlayers){
-                        //Cria as rodadas para enviar
-                        //Avisa que vai começar e envia a rodada
+                        //Ultimo usuário cria a o jogo/rodada
+                        var roundGame = await StartGameController.createOrUpdateRound(dbRoom.CodeRoom);
+                        startGame = true;
                     }
 
-                    res.status(200).json({ room: dbRoom, user: dbUser });
+                    res.status(200).json({ room: dbRoom, user: dbUser, startGame: startGame });
                 }
             }
             else{

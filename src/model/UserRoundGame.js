@@ -8,6 +8,7 @@ class UserRoundGame extends Model {
       IdRoundGame: { type: DataTypes.INTEGER, allowNull: false },
       IdUser: { type: DataTypes.INTEGER, allowNull: false  },
       IdAnswer: { type: DataTypes.INTEGER, allowNull: false  },
+      LetterRound: { type: DataTypes.STRING, allowNull: true },
       DateTimeStop: { type: DataTypes.DATE, allowNull: true },
       Score: { type: DataTypes.INTEGER, allowNull: true }
     },{

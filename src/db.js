@@ -25,5 +25,12 @@ User.init(dbConnect);
 User.sync();
 User.sync({alter: true});
 
+RoundGame.init(dbConnect);
+RoundGame.sync();
+RoundGame.sync({alter: true});
+
+UserRoundGame.init(dbConnect);
+UserRoundGame.sync();
+UserRoundGame.sync({alter: true});
 
 module.exports = dbConnect;
