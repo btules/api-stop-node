@@ -2,10 +2,6 @@
 
 Bem-vindo ao repositório Backend do projeto Stop
 
-# Instala o drive do banco mysql
-**npm install --save mysql2**
-
-npm install express socket.io
 ## Inicialização 🚀
 
 Para começar, clone este repositório em sua máquina local:
@@ -33,6 +29,11 @@ npm install --save sequelize
 Instale o driver do MySQL usando o comando abaixo:
 ```bash
 npm install --save mysql2
+```
+
+## Express e Socket.io Drivers
+```bach
+npm install express socket.io
 ```
 
 ## Executando o projeto 🔥
