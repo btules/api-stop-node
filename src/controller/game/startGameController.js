@@ -19,12 +19,16 @@ class StartGameController {
 
             //Busca o jogo que está acontecendo na sala
             var dbRound = await RoundGame.findOne({ where: { IdRoom: dbRoom.Id }});
-           
+            console.log("Aqui::", dbRound);
+            if(dbRound && (dbRound.NumberOfRounds === dbRound.NumberRound) && !dbRound.Finished){
+                await RoundGame.update( { Finished: true }, {  where: { Id: dbRound.Id } });
+                return dbRound;
+            }
+
             //Se o jogo não existir cria
             if(!dbRound){
                 //Gera a letra da rodada do jogo
                 var letter = RoundGame.generateLetter([]);
-                console.log("Letra:", letter);
                 //Cria a rodada do jogo
                 dbRound = await RoundGame.create({
                     IdRoom: dbRoom.Id,
@@ -38,7 +42,6 @@ class StartGameController {
             else{
                 //Busca o criador da sala pra usar de base para as rodadas que já aconteceram
                 var dbUserCreatorRoom = await User.findOne({ where: { Name: dbRoom.PlayerNameCreator, CodeRoom: dbRoom.CodeRoom } });
-                console.log("Usuário que buscou:", dbUserCreatorRoom);
                 //Busca as rodadas que aconteceram de acordo com o usuário criados e o id do jogo que está ocorrendo na sala
                 var listUserRoundGame = await UserRoundGame.findAll({ where: { IdUser:dbUserCreatorRoom.Id, IdRoundGame: dbRound.Id }}); //Busca todas as rodas de acordo com o administrador da sala
                 //Lista de letras usadas
@@ -50,7 +53,6 @@ class StartGameController {
                 //Atualiza o round do jogo
                 await RoundGame.update( { Letter: dbRound.Letter, NumberRound: dbRound.NumberRound }, {  where: { Id: dbRound.Id } });
             }
-
             return dbRound;
         }
         catch (error){

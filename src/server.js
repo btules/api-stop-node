@@ -26,11 +26,8 @@ serverHttp.listen(3000, () =>{
 const UserController = require('./controller/user/userController');
 
 serverSocketIo.on('connection', socket => {
-    console.log("Cheogu no webSocket:", socket.id);
-    
     //Manda o client mandar o user pra salvar no banco
     socket.send('connectUser');
-    serverSocketIo.emit('message', "Teste para todos");
 
     socket.on('connectionUser', (user) => {
         //Salva o user no banco com o id da conexão

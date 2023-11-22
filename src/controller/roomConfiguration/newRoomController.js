@@ -25,7 +25,7 @@ class NewRoomController {
         }
         catch (error){
             console.log("Erro:", error);
-            res.status(500).json({ error: "Erro interno do servidor." });
+            res.status(500).json({ error: "NewRoomController > CreateRoom > Erro interno do servidor." });
         }
     }
 }

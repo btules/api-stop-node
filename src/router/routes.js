@@ -26,30 +26,25 @@ router.post('/roomConfiguration/newRoom', async (req, res) =>{
 //#endregion Room
 
 router.post('/game/startGame', (req, res) => {
-    const startGame = req.body;
-    const playGame = StartGameController.startGame(startGame);
-
-    res.send(playGame);
+    const playGame = StartGameController.startGame(req, res);
 });
 
 router.get('/game/getRoundGame/:IdRoom', (req, res) => {
     StartGameController.getRoundGame(req, res);
 });
 
-//Rota teste
-router.post('/game/startGame/createOrUpdateRound', (req, res) => {
-    const playGame = StartGameController.createOrUpdateRound('75700447462');
-    res.send(playGame);
-});
-
 router.post('/game/stopGame', (req, res) =>{
-    const stopGame = req.body;
-
-    const finalGame = StopGameController.stopGame(stopGame);
-
-    res.send(finalGame);
+    const finalGame = StopGameController.stopGame(req, res);
 });
 
+router.post('/game/startGame/createOrUpdateRound/:CodeRoom', (req, res) => {
+    const { CodeRoom } = req.params;
+    const roundGame = StartGameController.createOrUpdateRound(CodeRoom);
+    res.send(roundGame);
+});
+
+
+//Rota teste
 router.get('/roomConfiguration/existingRoom/getByCode/:code', (req, res) => {
     const room = ExistingRoomController.getExistingRoom(req.params.code);
     res.status(200).json({ room });

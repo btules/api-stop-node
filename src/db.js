@@ -11,12 +11,23 @@ const dbConnect = new Sequelize("banco_stop", "root", "2204c.", {
     host: 'localhost',
     dialect: 'mysql'
 });
-
-dbConnect.authenticate().then(function(){
+/*
+await dbConnect.authenticate().then(function(){
     console.log("Sucesso na conexão com o banco de dados");
 }).catch(function(){
     console.log("Erro conexão com banco de dados");
-});
+});*/
+
+async function executeBD() {
+    try {
+        await dbConnect.authenticate();
+        console.log("Sucesso na conexão com o banco de dados");
+    } catch (error) {
+        console.error("Erro na conexão com o banco de dados", error);
+    }
+}
+
+executeBD();
 
 Room.init(dbConnect);
 Room.sync();
@@ -33,4 +44,9 @@ UserRoundGame.init(dbConnect);
 UserRoundGame.sync();
 UserRoundGame.sync({alter: true});
 
+AnswerCategory.init(dbConnect);
+AnswerCategory.sync();
+AnswerCategory.sync({alter: true});
+
 module.exports = dbConnect;
+
