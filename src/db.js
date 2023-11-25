@@ -7,8 +7,8 @@ const RoundGame = require('./model/RoundGame');
 const User = require('./model/User');
 const UserRoundGame = require('./model/UserRoundGame');
 
-const dbConnect = new Sequelize("banco_stop", "root", "2204c.", {
-    host: 'localhost',
+const dbConnect = new Sequelize("banco_stop", "root", "root", {
+    host: 'mysqldb',
     dialect: 'mysql'
 });
 /*
@@ -49,4 +49,3 @@ AnswerCategory.sync();
 AnswerCategory.sync({alter: true});
 
 module.exports = dbConnect;
-
