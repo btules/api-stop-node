@@ -31,6 +31,7 @@ serverSocketIo.on('connection', socket => {
 
     socket.on('connectionUser', (user) => {
         //Salva o user no banco com o id da conexão
+        console.log("Conexão user:", user);
         UserController.createOrUpdateConnection(user, socket.id);
     });
 

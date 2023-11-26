@@ -43,8 +43,6 @@ class ExistingRoomController {
                     var startGame = false;
                     //Se for o último player da sala, avisa que vai começar
                     if((users.length + 1) >= dbRoom.NumberPlayers){
-                        //Ultimo usuário cria a o jogo/rodada
-                        var roundGame = await StartGameController.createOrUpdateRound(dbRoom.CodeRoom);
                         startGame = true;
                     }
 

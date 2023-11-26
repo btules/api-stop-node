@@ -1,6 +1,6 @@
 const Room = require('../../model/Room.js');
 const User = require('../../model/User.js');
-
+const StartGameController = require('../../controller/game/startGameController.js');
 class NewRoomController {
     static async newRoom(newRoom){
         console.log(newRoom);
@@ -14,12 +14,18 @@ class NewRoomController {
             var dbUser = await User.findOne({ where: { Name: PlayerNameCreator } });
             if(!dbUser)
                 dbUser = await User.create({ Name : PlayerNameCreator, CodeRoom });
-            
+            else{
+                dbUser = await User.update( { CodeRoom }, {  where: { Id: dbUser.Id } });
+                dbUser = await User.findOne({ where: { Name : PlayerNameCreator } });
+            }
+
             if(dbRoom){
                 res.status(200).json({ message: "Já existe esta sala" });
             }
             else{
                 var room = await Room.create(req.body);
+                await StartGameController.createRoundsGame(CodeRoom);
+
                 res.status(200).json({ room , user: dbUser });
             }
         }

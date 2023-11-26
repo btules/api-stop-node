@@ -10,10 +10,8 @@ class ConnectionRoomController{
                 dbUser = await User.create({ Name, CodeRoom,IdConnection: idConnection });
             }
             else {
-
                 await User.update( { IdConnection: idConnection }, {  where: { Name, CodeRoom } });
             }
-            console.log("Depois que salvou: ", dbUser);
         }
         catch (error){
             console.log("Erro:", error);
@@ -21,7 +19,6 @@ class ConnectionRoomController{
     }
 
     static async getUsersByRoom (codeRoom) {
-        console.log("Chegou: ", codeRoom);
         try{
             var listUsers = await User.findAll({ where: { CodeRoom: codeRoom } });
             console.log("Lista de usuários:", listUsers);

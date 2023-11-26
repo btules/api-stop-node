@@ -3,13 +3,15 @@ const RoundGame = require('../../model/RoundGame');
 const AnswerCategory = require('../../model/AnswerCategory');
 class StopGameController{
     static async stopGame(req, res){
-        console.log(req.body);
         try{
 
             const { IdRoundGame, IdUser, Answers, DateTimeStop, Score } = req.body;
         
             //Busca a rodada que está ocorrendo
             var dbRoundGame = await RoundGame.findOne({ where: { Id: IdRoundGame }});
+
+            if(!dbRoundGame.Finished)
+                await RoundGame.update( { Finished: true }, {  where: { Id: dbRoundGame.Id } });
 
             //Armazenar o userRoundGame
             var dbUserRoundGame = await UserRoundGame.create({ IdRoundGame, IdUser, LetterRound: dbRoundGame.Letter, DateTimeStop, Score });
@@ -20,7 +22,6 @@ class StopGameController{
                 });
             }
 
-            dbRoundGame.NumberRound++;
             res.status(200).json({ roundGame: dbRoundGame });
         }
         catch (error){

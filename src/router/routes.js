@@ -28,19 +28,17 @@ router.post('/roomConfiguration/newRoom', async (req, res) =>{
 router.post('/game/startGame', (req, res) => {
     const playGame = StartGameController.startGame(req, res);
 });
-
+/*
 router.get('/game/getRoundGame/:IdRoom', (req, res) => {
     StartGameController.getRoundGame(req, res);
-});
+});*/
 
 router.post('/game/stopGame', (req, res) =>{
     const finalGame = StopGameController.stopGame(req, res);
 });
 
-router.post('/game/startGame/createOrUpdateRound/:CodeRoom', (req, res) => {
-    const { CodeRoom } = req.params;
-    const roundGame = StartGameController.createOrUpdateRound(CodeRoom);
-    res.send(roundGame);
+router.post('/game/startGame/getRoundGame/:CodeRoom', (req, res) => {
+    StartGameController.getRoundGame(req, res);
 });
 
 
