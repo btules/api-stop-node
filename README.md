@@ -40,5 +40,18 @@ npm install express socket.io
 Tudo certo até aqui? Chegou a hora de executar o projeto. Rode o comando a seguir:
 
 ```bash
-npm run dev
+git clone https://github.com/mysql/mysql-docker.git mysql-docker
+
+```Subistituir nesse arquivo mysql-docker/mysql-cluster/8.0/Dockerfile
+RUN rpm -U https://repo.mysql.com/mysql-cluster-community-minimal-release-el8.rpm \
+  && rpm -U https://repo.mysql.com/mysql80-community-release-el8.rpm
+
+
+docker network create stop-api-net
+
+docker build -t api-stop-node .
+
+docker build -t mysql-docker/mysql-cluster mysql-docker/mysql-cluster/8.0
+
+docker-compose up --build
 ```
