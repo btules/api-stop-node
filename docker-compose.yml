@@ -1,0 +1,84 @@
+version: '3.8'
+
+services:
+  mysqldb:
+    container_name: mysqldb
+    image: mysql
+    ports:
+      - "3307:3306"
+    environment:
+      MYSQL_PASSWORD: root
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: banco_stop
+    networks:
+      - stop-api-net
+
+  api-stop3001:
+    container_name: api-stop3001
+    image: api-stop-node
+    hostname: api-stop3001
+    ports:
+      - "3001:3000"
+    environment:
+      MYSQL_HOST: mysqldb
+      MYSQL_PASSWORD: root
+      MYSQL_PORT: 3306
+      SERVER_PORT: 3001
+    networks:
+      - stop-api-net
+    restart: always
+
+
+  api-stop3002:
+    container_name: api-stop3002
+    image: api-stop-node
+    hostname: api-stop3002
+    ports:
+      - "3002:3000"
+    environment:
+      MYSQL_HOST: mysqldb
+      MYSQL_PASSWORD: root
+      MYSQL_PORT: 3306
+      SERVER_PORT: 3002
+    networks:
+      - stop-api-net
+    restart: always
+
+
+  api-stop3003:
+    container_name: api-stop3003
+    image: api-stop-node
+    hostname: api-stop3003
+    ports:
+      - "3003:3000"
+    environment:
+      MYSQL_HOST: mysqldb
+      MYSQL_PASSWORD: root
+      MYSQL_PORT: 3306
+      SERVER_PORT: 3003
+    networks:
+      - stop-api-net
+    restart: always
+
+  nginx:
+    build:
+      dockerfile: Dockerfile
+      context: ./nginx
+    container_name: proxy
+    ports:
+      - "8080:8080"
+    depends_on:
+      - api-stop3001
+      - api-stop3002
+      - api-stop3003
+    networks:
+      - stop-api-net
+
+networks:
+  stop-api-net:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: 192.168.0.0/16
+    
