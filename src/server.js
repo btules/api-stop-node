@@ -6,7 +6,7 @@ const cors = require('cors');
 
 const server = express();
 
-// require('./db');
+require('./db');
 
 server.use(cors())
 server.use(bodyParser.json())
