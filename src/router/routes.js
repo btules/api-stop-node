@@ -48,4 +48,9 @@ router.get('/roomConfiguration/existingRoom/getByCode/:code', (req, res) => {
     res.status(200).json({ room });
 });
 
+
+router.get('/teste', (req, res) => {
+    res.send('Esta é a mensagem que aparecerá na tela!');
+})
+
 module.exports = router;
