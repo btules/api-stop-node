@@ -27,7 +27,7 @@ services:
     environment:
       MYSQL_HOST: mysqldb
       MYSQL_PASSWORD: root
-      MYSQL_PORT: 3306
+      MYSQL_PORT: 3307
       SERVER_PORT: 3001
     networks:
       - stop-api-net
@@ -45,7 +45,7 @@ services:
     environment:
       MYSQL_HOST: mysqldb
       MYSQL_PASSWORD: root
-      MYSQL_PORT: 3306
+      MYSQL_PORT: 3307
       SERVER_PORT: 3002
     networks:
       - stop-api-net
@@ -63,7 +63,7 @@ services:
     environment:
       MYSQL_HOST: mysqldb
       MYSQL_PASSWORD: root
-      MYSQL_PORT: 3306
+      MYSQL_PORT: 3307
       SERVER_PORT: 3003
     networks:
       - stop-api-net
