@@ -7,8 +7,8 @@ services:
     ports:
       - "3307:3307"
     environment:
-      MYSQL_ROOT_PASSWORD: 220c.
-      MYSQL_PASSWORD: 220c.
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_PASSWORD: root
       MYSQL_DATABASE: banco_stop
     volumes:
       - ./sql-scripts:/docker-entrypoint-initdb.d
@@ -26,7 +26,7 @@ services:
       - mysqldb
     environment:
       MYSQL_HOST: mysqldb
-      MYSQL_PASSWORD: 220c.
+      MYSQL_PASSWORD: root
       MYSQL_PORT: 3306
       SERVER_PORT: 3001
     networks:
@@ -44,7 +44,7 @@ services:
       - mysqldb
     environment:
       MYSQL_HOST: mysqldb
-      MYSQL_PASSWORD: 220c.
+      MYSQL_PASSWORD: root
       MYSQL_PORT: 3306
       SERVER_PORT: 3002
     networks:
@@ -62,7 +62,7 @@ services:
       - mysqldb
     environment:
       MYSQL_HOST: mysqldb
-      MYSQL_PASSWORD: 220c.
+      MYSQL_PASSWORD: root
       MYSQL_PORT: 3306
       SERVER_PORT: 3003
     networks:

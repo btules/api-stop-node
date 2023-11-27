@@ -7,7 +7,7 @@ const RoundGame = require('./model/RoundGame');
 const User = require('./model/User');
 const UserRoundGame = require('./model/UserRoundGame');
 
-const dbConnect = new Sequelize("banco_stop", "root", "220c.", {
+const dbConnect = new Sequelize("banco_stop", "root", "root", {
     host: 'mysqldb',
     dialect: 'mysql'
 });
