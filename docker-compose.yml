@@ -1,6 +1,7 @@
 version: '3.8'
 
 services:
+# inicio banco
   mysqldb:
     container_name: mysqldb
     image: mysql
@@ -13,8 +14,66 @@ services:
     volumes:
       - ./sql-scripts:/docker-entrypoint-initdb.d
       - ./mysql-data:/var/lib/mysql
+      - ./mysql-docker/mysql-cluster/8.0/cnf/mysql-cluster.cnf:/etc/mysql/mysql.conf.d/mysql-cluster.cnf
     networks:
       - stop-api-net
+
+  management1:
+    image: mysql-docker/mysql-cluster
+    container_name: management1
+    networks:
+      mysql-cluster:
+        ipv4_address: "192.168.0.2"
+    command: ndb_mgmd
+
+  ndb1:
+    image: mysql/mysql-cluster
+    container_name: ndb1
+    networks:
+      mysql-cluster:
+        ipv4_address: "192.168.0.3"
+    command: ndbd
+
+  ndb2:
+    image: mysql/mysql-cluster
+    container_name: ndb2
+    networks:
+      mysql-cluster:
+        ipv4_address: "192.168.0.4"
+    command: ndbd
+
+  mysql1:
+    image: mysql/mysql-cluster
+    container_name: mysql1
+    networks:
+      mysql-cluster:
+        ipv4_address: "192.168.0.10"
+      stop-api-net:
+    ports:
+      - "3308:3307"
+    volumes:
+      - ./mysql-docker/mysql-cluster/8.0/cnf/mysql-cluster.cnf:/etc/mysql/mysql.conf.d/mysql-cluster.cnf
+    environment:
+      MYSQL_ROOT_PASSWORD: 220c.
+    command: mysqld
+
+  mysql2:
+    image: mysql/mysql-cluster
+    container_name: mysql2
+    networks:
+      stop-api-net:
+      mysql-cluster:
+        ipv4_address: "192.168.0.9"
+    ports:
+      - "3309:3307"
+    volumes:
+      - ./mysql-docker/mysql-cluster/8.0/cnf/mysql-cluster.cnf:/etc/mysql/mysql.conf.d/mysql-cluster.cnf
+    environment:
+      MYSQL_ROOT_PASSWORD: 220c.
+    command: mysqld
+# final banco
+
+# containers do projeto
 
   api-stop3001:
     container_name: api-stop3001
@@ -27,7 +86,7 @@ services:
     environment:
       MYSQL_HOST: mysqldb
       MYSQL_PASSWORD: 220c.
-      MYSQL_PORT: 3306
+      MYSQL_PORT: 3307
       SERVER_PORT: 3001
     networks:
       - stop-api-net
@@ -45,7 +104,7 @@ services:
     environment:
       MYSQL_HOST: mysqldb
       MYSQL_PASSWORD: 220c.
-      MYSQL_PORT: 3306
+      MYSQL_PORT: 3307
       SERVER_PORT: 3002
     networks:
       - stop-api-net
@@ -63,11 +122,13 @@ services:
     environment:
       MYSQL_HOST: mysqldb
       MYSQL_PASSWORD: 220c.
-      MYSQL_PORT: 3306
+      MYSQL_PORT: 3307
       SERVER_PORT: 3003
     networks:
       - stop-api-net
     restart: always
+
+# final do projeto
 
   nginx:
     build:
@@ -84,10 +145,11 @@ services:
       - stop-api-net
 
 networks:
-  stop-api-net:
-    driver: bridge
+  mysql-cluster:
     ipam:
       driver: default
       config:
         - subnet: 192.168.0.0/16
+  stop-api-net:
+    external: true
     
